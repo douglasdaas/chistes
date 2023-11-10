@@ -5,13 +5,13 @@ const { app, server } = require('../app');
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('Chistes API', () => {
+describe('API de Chistes', () => {
     after(() => {
         server.close();
     });
 
     describe('GET /chistes', () => {
-        it('should return a random joke if no type is specified', (done) => {
+        it('debería devolver un chiste aleatorio si no se especifica un tipo', (done) => {
             chai.request(app)
                 .get('/chistes')
                 .end((err, res) => {
@@ -21,7 +21,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return a Chuck Norris joke if type is "Chuck"', (done) => {
+        it('debería devolver un chiste de Chuck Norris si el tipo es "Chuck"', (done) => {
             chai.request(app)
                 .get('/chistes?tipo=Chuck')
                 .end((err, res) => {
@@ -31,7 +31,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return a Dad joke if type is "Dad"', (done) => {
+        it('debería devolver un chiste de Papá si el tipo es "Dad"', (done) => {
             chai.request(app)
                 .get('/chistes?tipo=Dad')
                 .end((err, res) => {
@@ -41,7 +41,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return an error if an invalid type is specified', (done) => {
+        it('debería devolver un error si se especifica un tipo no válido', (done) => {
             chai.request(app)
                 .get('/chistes?tipo=Invalid')
                 .end((err, res) => {
@@ -53,10 +53,10 @@ describe('Chistes API', () => {
     });
 
     describe('POST /chistes', () => {
-        it('should save a new joke and return success message', (done) => {
+        it('debería guardar un nuevo chiste y devolver un mensaje de éxito', (done) => {
             chai.request(app)
                 .post('/chistes')
-                .send({ texto: 'This is a test joke' })
+                .send({ texto: 'Este es un chiste de prueba' })
                 .end((err, res) => {
                     if (err) {
                         done(err); // Asegúrate de llamar a done() con el error
@@ -69,8 +69,7 @@ describe('Chistes API', () => {
                 });
         });
 
-
-        it('should return an error if "texto" field is missing', (done) => {
+        it('debería devolver un error si falta el campo "texto"', (done) => {
             chai.request(app)
                 .post('/chistes')
                 .send({})
@@ -83,10 +82,10 @@ describe('Chistes API', () => {
     });
 
     describe('PUT /chistes/:number', () => {
-        it('should update the text of a joke and return success message', (done) => {
+        it('debería actualizar el texto de un chiste y devolver un mensaje de éxito', (done) => {
             chai.request(app)
                 .put('/chistes/1')
-                .send({ texto: 'This is an updated joke' })
+                .send({ texto: 'Este es un chiste actualizado' })
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.have.property('mensaje');
@@ -95,10 +94,10 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return an error if joke with specified number is not found', (done) => {
+        it('debería devolver un error si no se encuentra el chiste con el número especificado', (done) => {
             chai.request(app)
                 .put('/chistes/999')
-                .send({ texto: 'This is an updated joke' })
+                .send({ texto: 'Este es un chiste actualizado' })
                 .end((err, res) => {
                     expect(res).to.have.status(404);
                     expect(res.body).to.have.property('error');
@@ -106,7 +105,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return an error if "texto" field is missing', (done) => {
+        it('debería devolver un error si falta el campo "texto"', (done) => {
             chai.request(app)
                 .put('/chistes/1')
                 .send({})
@@ -119,7 +118,7 @@ describe('Chistes API', () => {
     });
 
     describe('DELETE /chistes/:number', () => {
-        it('should delete a joke and return success message', (done) => {
+        it('debería eliminar un chiste y devolver un mensaje de éxito', (done) => {
             chai.request(app)
                 .delete('/chistes/1')
                 .end((err, res) => {
@@ -129,7 +128,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return an error if joke with specified number is not found', (done) => {
+        it('debería devolver un error si no se encuentra el chiste con el número especificado', (done) => {
             chai.request(app)
                 .delete('/chistes/999')
                 .end((err, res) => {
@@ -141,7 +140,7 @@ describe('Chistes API', () => {
     });
 
     describe('GET /lcm', () => {
-        it('should calculate the LCM of a list of numbers', (done) => {
+        it('debería calcular el MCM de una lista de números', (done) => {
             chai.request(app)
                 .get('/lcm?numbers=2&numbers=3&numbers=4')
                 .end((err, res) => {
@@ -151,7 +150,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return an error if less than 2 numbers are provided', (done) => {
+        it('debería devolver un error si se proporcionan menos de 2 números', (done) => {
             chai.request(app)
                 .get('/lcm?numbers=2')
                 .end((err, res) => {
@@ -163,7 +162,7 @@ describe('Chistes API', () => {
     });
 
     describe('GET /increment', () => {
-        it('should increment a number by 1', (done) => {
+        it('debería incrementar un número en 1', (done) => {
             chai.request(app)
                 .get('/increment?number=5')
                 .end((err, res) => {
@@ -174,7 +173,7 @@ describe('Chistes API', () => {
                 });
         });
 
-        it('should return an error if number is missing', (done) => {
+        it('debería devolver un error si falta el número', (done) => {
             chai.request(app)
                 .get('/increment')
                 .end((err, res) => {
@@ -185,4 +184,3 @@ describe('Chistes API', () => {
         });
     });
 });
-
